@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Keep track of your network</title>
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+<script type="text/javascript" src="/eel.js"></script>
+</head>
+    <body > <!--</body>oncontextmenu="return false" onselectstart="return false" ondragstart="return false">-->
+    
+    <!--Displays a graphical interface to the user where he can choose his preferred option--> 
+    <div data-role="carousel"  
+    id = "carousel"
+    data-cls-bullet="bullet-big"
+    data-auto-start="true"
+    data-cls-controls="fg-white"
+    data-bullets-position="right"
+    data-control-next="<span class='mif-chevron-right fg-cyan'></span>"
+    data-control-prev="<span class='mif-chevron-left fg-cyan'></span>"
+    >
+    
+    <!-- First slide--> 
+    <div class="slide p-2 pl-10 pr-10" data-cover="assets/one_device_img.jpg">
+    <div class="row flex-align-center h-100">
+    <div class="cell-md-4 text-center"></div>
+    <div class="cell-md-8">
+    <h1 class="text-light">Alert on one ip address</h1>
+    <p class="mt-4 mb-4">Choose an IP address that is most important to you from all the IP addresses on your network and receive an SMS message when the device holding the IP address does not respond to our PING requests</p>
+    <button class="button alert" id="move_one_ip">Move me</button></div></div></div>
+
+    <!-- secend slide--> 
+    <div class="slide p-2 pl-10 pr-10" data-cover="assets/all_devices_img.jpg">
+    <div class="row flex-align-center h-100">
+    <div class="cell-md-4 text-center"></div>
+    <div class="cell-md-8">
+    <h1 class="text-light">Alert on all ip address</h1>
+    <p class="mt-4 mb-4">Receive an alert for any device on your network that has stopped responding to our ping requests</p>
+    <button class="button alert" id = "move_all_network">Move me</button></div></div></div>
+
+    <!-- Third slide--> 
+    <div class="slide p-2 pl-10 pr-10" data-cover="assets/dns_img.jpg">
+    <div class="row flex-align-center h-100">
+    <div class="cell-md-4 text-center"></div>
+    <div class="cell-md-8">
+    <h1 class="text-light">Check your dns server</h1>
+    <p class="mt-4 mb-4">We will scan your dns server and give you back our conclusions and recommendations</p>
+    <button class="button alert" id="move_check_dns">Move me</button></div></div></div></div>
+
+
+    <br/><br/>
+
+       <!--The initial user interface for scanning a single IP address, in which the user will enter his details, his IP address, the start time of the scan and the end time of the scan. -->
+        <div id = "input_fields_for_single_address">
+        <div class = "container">
+        <div class = "row">
+        
+        <div class = "cell-5 offset-0.70"> 
+        <h5>ip address</h5>
+        <input id="first_ip_value"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-devices'>"
+        data-label="Enter your IP address"
+        placeholder="Enter IP address to scan for example: 192.168.120.10" >
+        </div>
+        
+        <div class = "cell-5 offset-0.70">
+        <h5>your phone (for sms)</h5>       
+        <input id="first_value_Recipients_phone"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-whatsapp'>"
+        data-label="Enter the phone number to which the sms will be sent"
+        placeholder="Enter the phone number (With Trunk prefix)"></div></div>
+        <br/>
+        <br/>
+        
+        <!--A linebreak--> 
+        <div class = "row">
+
+        <div class = "cell-5">
+        <h5>time to start the scean</h5>
+        <input id="first_value_time_start"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-enter'>"
+        data-label="Enter the scan start time"
+        placeholder="Enter the scan start time. for example: 07:00:00"></div>
+
+        <div class = "cell-5">
+        <h5>time to stop the scan</h5>
+        <input id="first_value_time_stop"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-exit'>"
+        data-label="Enter the scan stop time"
+        placeholder="Enter the scan stop time. for example: 09:00:00"
+        required></div>
+        </div>
+        </div> 
+        
+        <!--Next button and back button--> 
+        <div class="cell-2 offset-9">
+        <button class="button warning drop-shadow" id = "next_one_ip">Next</button></div>
+        <div class="cell-2 offset-1">
+        <button class="button warning drop-shadow" id = "back2">Go back</button></div>
+        </div>
+
+        <!-- The user interface of the second step in the process of scanning a single IP address. In these fields the user will enter the details of his twilio account --> 
+        <div id = "twillio_account_information">
+        <div class = "container">
+        <div class = "row">
+        
+        <div class = "cell-5 offset-0.70"> 
+        <h5>your phone in twilio</h5>
+        <input id="first_value_phone_of_the_sender"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-devices'>"
+        data-label="Enter your twilio phone number"
+        placeholder="Enter your twilio phone number (appears in your account)"></div>
+        
+        <div class = "cell-5 offset-0.70">
+        <h5>your account_sid</h5>       
+        <input id="first_value_account_sid"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-whatsapp'>"
+        data-label="Enter your account_sid"
+        placeholder="Enter your account_sid (appears in your account)" ></div>
+        </div>
+        
+        <br/>
+        <br/>
+        
+        <!--A linebreak--> 
+        <div class = "row">
+        
+        <div class = "cell-8">
+        <h5>your auth_token</h5>
+        <input id="first_value_auth_token"
+        type="text"
+        data-role="materialinput"
+        data-icon="<span class='mif-enter'>"
+        data-label="Enter your auth_token"
+        placeholder="Enter your auth_token (appears in your account)"></div>
+        </div>
+        </div> 
+        
+        
+        <!--start button and back button--> 
+        <div class="cell-2 offset-9">
+        <button class="button warning drop-shadow" id = "start_one_ip">start</button></div>
+        <div class="cell-2 offset-1">
+        <button class="button warning drop-shadow" id = "back3">Go back</button></div>
+        </div>
+        
+        
+    <!--The user interface of the initial step The process of scanning all the IP addresses on the network. In these fields, the user will enter his personal details and one IP address will be used to scan all the addresses on the network --> 
+
+
+    <div id = "input_fields_for_all_address">
+    <div class = "container">
+    <div class = "row">
+    <div class = "cell-5 offset-0.70"> 
+
+    <h5>ip address</h5>
+    <input id="secend_ip_value"
+    type="text"
+    data-role="materialinput"
+    data-icon="<span class='mif-devices'>"
+    data-label="Enter IP address from your network (without Quotation mark)"
+    placeholder="for example: 192.168.120.10" >
+    </div>
+    
+    <div class = "cell-5 offset-0.70">
+    <h5>your phone (for sms)</h5>       
+    <input id="secend_value_recipients_phone"
+    type="text"
+    data-role="materialinput"
+    data-icon="<span class='mif-whatsapp'>"
+    data-label="Enter the phone number to which the sms will be sent"
+    placeholder="Enter the phone number (With Trunk prefix)"></div>
+    </div>
+    
+    <br/>
+    <br/>
+    
+    <div class = "row">
+    
+    <div class = "cell-5">
+    <h5>time to start the scean</h5>
+    <input id="secend_value_time_start"
+     type="text"
+     data-role="materialinput"
+     data-icon="<span class='mif-enter'>"
+     data-label="Enter the scan start time"
+     placeholder="Enter the scan start time. for example: 07:00:00"></div>
+
+    <div class = "cell-5">
+    <h5>time to stop the scan</h5>
+    <input id="secend_value_time_stop"
+    type="text"
+    data-role="materialinput"
+    data-icon="<span class='mif-enter'>"
+    data-label="Enter the scan stop time"
+    placeholder="Enter the scan stop time. for example: 07:00:00"></div>
+    </div>
+    </div>
+     
+    <div class="cell-2 offset-9">
+    <button class="button warning drop-shadow" id = "next_all_ip">Next</button>   </div>
+    <div class="cell-2 offset-1">
+    <button class="button warning drop-shadow" id = "back5">Go back</button>   </div>
+
+    </div>
+
+    <!-- The user interface of the second step in the process of scanning all the IP addresses in the network. In these fields the user will enter his twilio account information --> 
+
+
+    <div id = "twillio_account_information_alladdr">
+    <div class = "container">
+    <div class = "row">
+    <div class = "cell-5 offset-0.70"> 
+
+
+    <h5>your number phone in twilio</h5>
+    <input id="secend_value_phone_of_the_sender"
+    type="text"
+    data-role="materialinput"
+    data-icon="<span class='mif-devices'>"
+    data-label="Enter your twilio phone number"
+    placeholder="Enter your twilio phone number (appears in your account)"></div>
+        
+    <div class = "cell-5 offset-0.70">
+    <h5>your account_sid</h5>       
+    <input id="secend_value_account_sid"
+    type="text"
+    data-role="materialinput"
+    data-icon="<span class='mif-whatsapp'>"
+    data-label="Enter your account_sid (without Quotation mark)"
+    placeholder="Enter your account_sid (appears in your account)"></div>
+    </div>
+    
+    <br/>
+    <br/>
+    
+    <div class = "row">
+
+    <div class = "cell-8">
+    <h5>your auth_token</h5>
+    <input id="secend_value_auth_token"
+    type="text"
+    data-role="materialinput"
+    data-icon="<span class='mif-enter'>"
+    data-label="Enter your auth_token (without Quotation mark)"
+    placeholder="Enter your auth_token (appears in your account)">
+    </div>
+
+    </div>
+    </div> 
+    <div class="cell-2 offset-9">
+    <button class="button warning drop-shadow" id = "start_all_ip">start</button>   </div>
+
+    <div class="cell-2 offset-1">
+    <button class="button warning drop-shadow" id = "back4">Go back</button>   </div>
+
+
+    </div>
+
+    
+    <!--dns test interface--> 
+    
+    <div id = "actions_on_the_dns">
+    <div class = "container">
+    <div class = "row">
+    
+    
+    <div class = "cell-4"> 
+    <div class="img-container">
+    <img src="assets/img_check_dns.jpg" width="600" height="600" id="img_check_dns"></div></div>
+    
+    <div class = "cell-4"> 
+    <div class="img-container rounded">
+    <img src="assets/img_flush_dns.jpg" width="600" height="600" id="img_flush_dns"></div></div>
+    
+    <div class = "cell-4"> 
+    <div class="img-container drop-shadow">
+    <img src="assets/img_view_cache.jpg" width="600" height="600" id="img_view_cache"></div>
+        
+    
+    <br/> 
+    
+    <div class="cell-2 offset-9">
+    <button class="button warning drop-shadow" id="back1">Go back</button></div>
+    </div>
+    
+    </div>
+    </div>
+    </div>
+    
+    <div class = "text" id = "format_text">
+    <div class="window">
+    <div class="window-caption">
+    <span class="icon mif-windows"></span>
+    <span class="title">result</span>
+    <div class="buttons">
+    <span class="btn-min"></span>
+    <span class="btn-max"></span>
+    <span class="btn-close"></span>
+    </div>
+    </div>
+    <div class="window-content p-2" id="result">
+    </div>
+    </div> 
+    <br/> 
+    <div class="cell-2 offset-10">
+    <button class="button warning drop-shadow" id="back6">Go back</button>   </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script>
+
+
+    // In this code snippet we will write the relevant scripts in the user interface 
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        
+    $("#input_fields_for_single_address").fadeOut(0)   
+    $("#twillio_account_information").fadeOut(0)
+    $("#actions_on_the_dns").fadeOut(0)
+    $("#input_fields_for_all_address").fadeOut(0)
+    $("#twillio_account_information_alladdr").fadeOut(0)
+    $("#format_text").fadeOut(0)
+
+
+    $("#move_one_ip").click(function(){
+    $("#carousel").fadeOut(0)
+    $("#input_fields_for_single_address").fadeIn(0)   
+    }); 
+
+    $("#move_all_network").click(function(){
+    $("#carousel").fadeOut(0)
+    $("#input_fields_for_all_address").fadeIn(0)   
+    }); 
+
+    $("#move_check_dns").click(function(){
+    $("#carousel").fadeOut(0)
+    $("#actions_on_the_dns").fadeIn(0)   
+    });
+
+    $("#back1").click(function(){
+    $("#carousel").fadeIn(0)
+    $("#actions_on_the_dns").fadeOut(0)   
+    }); 
+
+    $("#back2").click(function(){
+    $("#input_fields_for_single_address").fadeOut(0)
+    $("#carousel").fadeIn(0)   
+    }); 
+        
+    $("#back3").click(function(){
+    $("#input_fields_for_single_address").fadeIn(0)
+    $("#twillio_account_information").fadeOut(0)   
+    }); 
+        
+    $("#back4").click(function(){
+    $("#input_fields_for_all_address").fadeIn(0)
+    $("#twillio_account_information_alladdr").fadeOut(0)   
+    }); 
+
+    $("#back5").click(function(){
+    $("#input_fields_for_all_address").fadeOut(0)
+    $("#carousel").fadeIn(0)   
+    }); 
+        
+    $("#back4").click(function(){
+    $("#input_fields_for_all_address").fadeIn(0)
+    $("#twillio_account_information_alladdr").fadeOut(0)   
+    }); 
+        
+    $("#back6").click(function(){
+    $("#format_text").fadeOut(0)  
+    $("#actions_on_the_dns").fadeIn(0)
+    }); 
+        
+
+    $("#next_one_ip").click(function(){
+    window.first_parameter = ($("#first_ip_value")).val(); 
+    window.secend_parameter = ($("#first_value_Recipients_phone")).val(); 
+    window.third_paramter = ($("#first_value_time_start")).val(); 
+    window.fourth_paramter = ($("#first_value_time_stop")).val();
+    $("#input_fields_for_single_address").fadeOut(0);
+    $("#twillio_account_information").fadeIn(0)
+    }); 
+
+    $("#start_one_ip").click(function(){
+    let fifth_paramter = ($("#first_value_phone_of_the_sender")).val(); 
+    let sixth_parameter = ($("#first_value_account_sid")).val(); 
+    let seventh_paramter = ($("#first_value_auth_token")).val(); 
+        
+  eel.my_function_one(first_parameter,secend_parameter,third_paramter,fourth_paramter,fifth_paramter,sixth_parameter,seventh_paramter)
+  
+    });
+
+        
+        
+
+
+    $("#next_all_ip").click(function(){
+    window.first_param = ($("#secend_ip_value")).val(); 
+    window.secend_param = ($("#secend_value_recipients_phone")).val(); 
+    window.third_param = ($("#secend_value_time_start")).val(); 
+    window.fourth_param = ($("#secend_value_time_stop")).val();
+    $("#input_fields_for_all_address").fadeOut(0)
+    $("#twillio_account_information_alladdr").fadeIn(0)
+    }); 
+
+    $("#start_all_ip").click(function(){
+    let fifth_param = ($("#secend_value_phone_of_the_sender")).val(); 
+    let sixth_param = ($("#secend_value_account_sid")).val(); 
+    let seventh_param = ($("#secend_value_auth_token")).val(); 
+   eel.my_function_to(first_param,secend_param,third_param,fourth_param,fifth_param,sixth_param,seventh_param)
+        
+    }); 
+        
+    function start(){
+    Loading = Metro.activity.open({
+    type: 'cycle',
+    style:'color',
+    text: '<div class=\'mt-2 text-small\'>We working on it</div>',
+    overlayClickClose: true
+    });}
+
+        
+    function End() {
+    Metro.activity.close(Loading);
+    }
+
+    //Scripts to perform operations on the dns
+
+       $("#img_check_dns").click(function(){
+       start(); 
+       eel.return_check_dns()
+       (function(data) {
+       $("#actions_on_the_dns").fadeOut(0)
+       $("#format_text").fadeIn(0)
+       $("#result").html(data);
+       End();
+
+    });
+    });
+        
+    $("#img_flush_dns").click(function(){
+    start(); 
+    eel.flush_dns_t_f()
+    (function(data) {
+    $("#actions_on_the_dns").fadeOut(0);
+    $("#format_text").fadeIn(0);
+    $("#result").html(data);
+    End();
+    });
+    }); 
+
+    $("#img_view_cache").click(function(){
+    start(); 
+    eel.display_dns_cache()
+    (function(data) {
+    $("#actions_on_the_dns").fadeOut(0);
+    $("#format_text").fadeIn(0);
+    $("#result").html(data);
+    End();
+    });
+    }); 
+        
+    </script>
+    
+    
+    
+
+    </body>
+    </html>
+
+
